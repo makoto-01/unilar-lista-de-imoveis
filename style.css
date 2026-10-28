@@ -60,3 +60,76 @@ width: 170px;
 #propertyDialog::backdrop {
     background: rgba(20, 15, 35, 0.55);
 }
+/* Ajuste do formulário de interesse */
+#propertyDialog {
+    width: min(92%, 440px);
+    max-width: 440px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 24px;
+    border: none;
+    border-radius: 16px;
+}
+
+#propertyDialog .dialogbody {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 8px 0;
+    box-sizing: border-box;
+}
+
+#propertyDialog .dialogbody h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+}
+
+#interestForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 18px;
+}
+
+#interestForm label {
+    display: block;
+    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#interestForm input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border: 1px solid #d8d5e2;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#interestForm input:focus {
+    outline: 2px solid #7654e8;
+    outline-offset: 1px;
+}
+
+#interestForm button {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+    #propertyDialog {
+        padding: 18px;
+    }
+
+    #propertyDialog .dialogbody h2 {
+        font-size: 21px;
+    }
+}
