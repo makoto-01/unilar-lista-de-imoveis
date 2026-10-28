@@ -11,7 +11,33 @@ const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximum
 function getList(){const q=$('#searchInput').value.trim().toLocaleLowerCase('pt-BR'),type=$('#typeFilter').value,max=Number($('#priceFilter').value||Infinity);let list=properties.filter(p=>`${p.title} ${p.area} ${p.type} Patos de Minas`.toLocaleLowerCase('pt-BR').includes(q)&&(!type||p.type===type)&&p.price<=max&&(!selectedArea||p.area===selectedArea)&&(!onlyFavorites||favorites.has(p.id)));const sort=$('#sortFilter').value;if(sort==='low')list.sort((a,b)=>a.price-b.price);if(sort==='high')list.sort((a,b)=>b.price-a.price);return list;}
 function render(){const list=getList();$('#resultCount').textContent=list.length;$('#favoriteCount').textContent=favorites.size;$('#favoritesToggle').innerHTML=`${onlyFavorites?'♥':'♡'} Favoritos <span id="favoriteCount">${favorites.size}</span>`;$('#propertyGrid').innerHTML=list.slice(0,limit).map(p=>`<article class="card"><div class="photo"><img src="${p.image}" alt="Foto ilustrativa: ${p.title}" loading="lazy"><span class="tag">${p.tag}</span><button class="fav ${favorites.has(p.id)?'on':''}" data-fav="${p.id}" aria-label="Alternar favorito">${favorites.has(p.id)?'♥':'♡'}</button></div><div class="cardbody"><div class="location">⌖ ${p.area}, Patos de Minas</div><h3>${p.title}</h3><div class="features"><span>▦ ${p.rooms} quarto(s)</span><span>◈ ${p.baths} banheiro(s)</span><span>↔ ${p.size} m²</span></div><div class="bottom"><div class="price">${money(p.price)} <small>/ mês</small></div><button class="details" data-details="${p.id}">Ver detalhes</button></div></div></article>`).join('')||'<div class="empty"><h3>Nenhum imóvel encontrado</h3><p>Tente mudar os filtros ou limpar a busca.</p><button class="outline" id="resetFilters">Limpar filtros</button></div>';document.querySelectorAll('.pin').forEach(b=>b.classList.toggle('selected',b.dataset.area===selectedArea));}
 function toast(msg){$('#toast').textContent=msg;$('#toast').classList.add('show');clearTimeout(timer);timer=setTimeout(()=>$('#toast').classList.remove('show'),2500)}
-function details(id){const p=properties.find(x=>x.id===Number(id));if(!p)return;$('#dialogContent').innerHTML=`<img class="dialogphoto" src="${p.image}" alt="Foto ilustrativa: ${p.title}"><div class="dialogbody"><div class="eyebrow">${p.type.toUpperCase()} · ${p.area.toUpperCase()}</div><h2>${p.title}</h2><p>⌖ ${p.area}, Patos de Minas</p><div class="features">${p.rooms} quarto(s) · ${p.baths} banheiro(s) · ${p.size} m²</div><div class="dialogprice">${money(p.price)} <small>/ mês</small></div><p>${p.description}</p><button class="primary" id="interestBtn">Tenho interesse</button></div>`;$('#propertyDialog').showModal();$('#interestBtn').addEventListener('click',()=>{$('#propertyDialog').close();toast('Demonstração: contato com anunciante ainda não conectado.');});}
+function details(id){const p=properties.find(x=>x.id===Number(id));if(!p)return;$('#dialogContent').innerHTML=`<img class="dialogphoto" src="${p.image}" alt="Foto ilustrativa: ${p.title}"><div class="dialogbody"><div class="eyebrow">${p.type.toUpperCase()} · ${p.area.toUpperCase()}</div><h2>${p.title}</h2><p>⌖ ${p.area}, Patos de Minas</p><div class="features">${p.rooms} quarto(s) · ${p.baths} banheiro(s) · ${p.size} m²</div><div class="dialogprice">${money(p.price)} <small>/ mês</small></div><p>${p.description}</p><button class="primary" id="interestBtn" data-id="${p.id}">Tenho interesse</button></div>`;$('#propertyDialog').showModal();$('#interestBtn').addEventListener('click',()=>{
+    const p=properties.find(x=>x.id===Number($('#interestBtn').dataset.id));
+    if(!p)return;
+
+    $('#dialogContent').innerHTML=`
+        <div class="dialogbody">
+            <h2>Tenho interesse</h2>
+            <p>Imóvel: ${p.title}</p>
+
+            <form id="interestForm">
+                <label for="interestName">Seu nome:</label>
+                <input id="interestName" type="text" required placeholder="Digite seu nome">
+
+                <label for="interestPhone">Seu telefone:</label>
+                <input id="interestPhone" type="tel" required placeholder="Digite seu telefone">
+
+                <button class="primary" type="submit">Enviar interesse</button>
+            </form>
+        </div>
+    `;
+
+    $('#interestForm').addEventListener('submit',e=>{
+        e.preventDefault();
+        toast('Formulário demonstrativo: o contato ainda não foi enviado.');
+        $('#propertyDialog').close();
+    });
+});}
 $('#searchForm').addEventListener('submit',e=>{
 e.preventDefault();
 limit=6;
