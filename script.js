@@ -47,3 +47,10 @@ toast('Busca concluída: '+total+' imóvel(is) encontrado(s).');
 $('#propertyGrid').scrollIntoView({behavior:'smooth',block:'start'});
 });
 ['typeFilter','priceFilter','sortFilter'].forEach(id=>$('#'+id).addEventListener('change',()=>{limit=6;render()}));$('#searchInput').addEventListener('input',()=>{limit=6;render()});$('#propertyGrid').addEventListener('click',e=>{const f=e.target.closest('[data-fav]'),d=e.target.closest('[data-details]');if(f){const id=Number(f.dataset.fav);favorites.has(id)?favorites.delete(id):favorites.add(id);render()}if(d)details(d.dataset.details);if(e.target.closest('#resetFilters')){$('#searchInput').value='';$('#typeFilter').value='';$('#priceFilter').value='';selectedArea='';onlyFavorites=false;render()}});$('#favoritesToggle').addEventListener('click',()=>{onlyFavorites=!onlyFavorites;render();toast(onlyFavorites?'Exibindo favoritos.':'Exibindo todos os imóveis.')});document.querySelectorAll('.pin').forEach(b=>b.addEventListener('click',()=>{selectedArea=selectedArea===b.dataset.area?'':b.dataset.area;onlyFavorites=false;render();toast(selectedArea?'Região selecionada: '+selectedArea:'Filtro de região removido.')}));$('#clearAreaBtn').addEventListener('click',()=>{selectedArea='';render();toast('Filtro de região removido.')});$('#showAllBtn').addEventListener('click',()=>{limit=properties.length;render();toast('Todos os imóveis estão sendo exibidos.')});$('#closeDialog').addEventListener('click',()=>$('#propertyDialog').close());$('#propertyDialog').addEventListener('click',e=>{if(e.target===$('#propertyDialog'))$('#propertyDialog').close()});render();
+$('#dicasLink').addEventListener('click',e=>{
+    e.preventDefault();
+    $('#dicas').scrollIntoView({
+        behavior:'smooth',
+        block:'center'
+    });
+});
