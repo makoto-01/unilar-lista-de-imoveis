@@ -11,3 +11,52 @@ object-fit: contain;
 footer .brand-logo {
 width: 170px;
 }
+/* Formulário de interesse */
+#dialogContent .dialogbody {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+#interestForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+#interestForm label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+#interestForm input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    box-sizing: border-box;
+    border: 1px solid #d8d5e2;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#interestForm button {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#propertyDialog {
+    width: min(92%, 480px);
+    max-width: 480px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+#propertyDialog::backdrop {
+    background: rgba(20, 15, 35, 0.55);
+}
