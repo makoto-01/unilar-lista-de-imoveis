@@ -133,3 +133,17 @@ width: 170px;
         font-size: 21px;
     }
 }
+```css
+/* Rolagem suave entre as seções */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Destaque da opção ativa no menu */
+.topbar nav a.active {
+    color: #7654e8;
+    font-weight: 700;
+    background-color: #f0ebff;
+    border-radius: 8px;
+}
+```
