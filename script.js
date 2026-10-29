@@ -54,3 +54,15 @@ $('#dicasLink').addEventListener('click',e=>{
         block:'center'
     });
 });
+```javascript
+// Atualiza o destaque da opção selecionada no menu
+document.querySelectorAll('.topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelectorAll('.topbar nav a').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        link.classList.add('active');
+    });
+});
+```
